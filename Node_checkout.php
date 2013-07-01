@@ -7,7 +7,8 @@
  * To change this template use File | Settings | File Templates.
  */
 
-class Node_checkout {
+class Node_checkout
+{
 
 public $AllNodes = array();
 public $SwitchedNodes = array();
@@ -21,24 +22,29 @@ function GetNodeArray($graph, $test_value)
                 $AllNodes[] = $node_content;
                 $SwitchedNodes[] = $node_content;
 
-                while(array_count_values($SwitchedNodes) == 0)
+                while(count($SwitchedNodes) == 0)
                 {
                     $ProcessedNodeValue = array_pop($SwitchedNodes);
 
                     foreach($ProcessedNodeValue as $keys=>$values)
                     {
+
                         if ($keys == "uuid")
                         {
-                            for($i = 0; $i=array_count_values($graph); $i++)
+
+                            for($i = 0; $i = count($graph); $i++)
                             {
+
                                 /** @var $j Separated node */
-                                for($j = 0; $j = array_count_values($graph[$i]); $j++)
+
+                                for($j = 0; $j = count($graph[$i]); $j++)
                                 {
-                                 if ((key($graph[$i][$j]) != "uuid") and ($graph[$i][$j]===$values))
-                                    {
-                                        $AllNodes[] = $graph[$i];
-                                        $SwitchedNodes[] = $graph[$i];
-                                    }
+
+                                    if ((key($graph[$i][$j]) != "uuid") and ($graph[$i][$j]===$values))
+                                        {
+                                            $AllNodes[] = $graph[$i];
+                                            $SwitchedNodes[] = $graph[$i];
+                                        }
                                 }
                             }
                         }
