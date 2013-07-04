@@ -10,48 +10,146 @@
 class Node_checkout
 {
 
-public $AllNodes = array();
-public $SwitchedNodes = array();
+private $AllNodes = array();
+private $SwitchedNodes = array();
+private $PopOutArray;
+private $node = array();
+private $Graph = array();
+private $TestValue;
 
-function GetNodeArray($graph, $test_value)
+function __construct($graph, $test_value)
 {
-    foreach($graph as $key_node=>$node_content)
+    $this->Graph = $graph;
+    $this->TestValue = $test_value;
+}
+/**
+*@ignored
+*/
+function GetNodeArray()
+{
+    /* foreach($graph as $key_node=>$node_content)
+         {
+             if($key_node === $test_value)
+             {
+                 $this->AllNodes[] = $node_content;
+                 $this->SwitchedNodes[] = $node_content;
+
+                 while(count($this->SwitchedNodes) != 0)
+                 {
+                     $ProcessedNodeValue = array_pop($this->SwitchedNodes);
+
+                     foreach($ProcessedNodeValue as $keys=>$values)
+                     {
+
+                         if ($keys == "uuid")
+                         {
+
+                             foreach($graph as $node_content_recursion)
+                             {
+                                 $this->RecursiveArray = $node_content_recursion;
+
+                                 foreach($this->RecursiveArray as $key_for_search_references=>$point_for_search_references)
+                                 {
+
+                                     foreach($graph as $key_node)
+                                     {
+                                         if(($node_content_recursion == $key_node) and ((strpos($key_for_search_references, "_ref")) != false) and ($point_for_search_references == $values))
+                                         {
+                                             $AllNodes[] = $node_content_recursion;
+                                             $SwitchedNodes[] = $node_content_recursion;
+                                         }
+                                     }
+                                 }
+                             }
+                         }
+                     }
+                 }
+             }
+         }*/
+
+    $this->node[] = $this->Graph[$this->TestValue];
+    $this->AllNodes[$this->TestValue] = $this->node;
+    $this->SwitchedNodes[$this->TestValue] = $this->node;
+
+    $this->PopOutArray = array_pop($this->SwitchedNodes);
+
+    $Node = new Node($this->PopOutArray);
+    $dependences = $Node->getDependences();
+
+    foreach($dependences as $key=>$references)
+    {
+        $this->node[] = $this->Graph;
+        $this->PopOutArray = array_pop($this->node);
+
+        if ($this->PopOutArray = $references)
         {
-            if($key_node === $test_value)
+            $this->AllNodes[] = $this->node;
+        }
+    }
+
+    return $this->AllNodes;
+}
+}
+
+class Graph
+{
+    private $GraphDescription;
+    public function __construct($Graph)
+    {
+        $this->GraphDescription = $Graph;
+    }
+
+    public function getSubgraph($KeyOfNode)
+    {
+        $ReturnSubgraph[] = $this->GraphDescription[$KeyOfNode];
+        $node = new Node($this->GraphDescription[$KeyOfNode]);
+        $subgraphNodes = $node->getDependences();
+        $i;
+        foreach($this->GraphDescription as $GraphNode)
+        {
+            foreach($GraphNode as $KeyGraphNode=>$ValueGraphNode)
             {
-                $AllNodes[] = $node_content;
-                $SwitchedNodes[] = $node_content;
-
-                while(count($SwitchedNodes) == 0)
+                for($i=0; $i<count($subgraphNodes); $i++)
                 {
-                    $ProcessedNodeValue = array_pop($SwitchedNodes);
-
-                    foreach($ProcessedNodeValue as $keys=>$values)
+                    if(($KeyGraphNode == 'uuid') && ($ValueGraphNode == $subgraphNodes[$i]))
                     {
-
-                        if ($keys == "uuid")
-                        {
-
-                            for($i = 0; $i = count($graph); $i++)
-                            {
-
-                                /** @var $j Separated node */
-
-                                for($j = 0; $j = count($graph[$i]); $j++)
-                                {
-
-                                    if ((key($graph[$i][$j]) != "uuid") and ($graph[$i][$j]===$values))
-                                        {
-                                            $AllNodes[] = $graph[$i];
-                                            $SwitchedNodes[] = $graph[$i];
-                                        }
-                                }
-                            }
-                        }
+                        $ReturnSubgraph[] = $GraphNode;
                     }
                 }
             }
         }
-    return $AllNodes;
+        return new Graph($ReturnSubgraph);
+    }
+
+    function getAllNodes()
+    {
+        foreach($this->GraphDescription as $node)
+        {
+            $Node[] = $node;
+        }
+
+        return $Node;
+    }
 }
+class Node
+{
+    private $Node = array();
+
+    public function __construct($Node)
+    {
+        $this->Node = $Node;
+    }
+
+    public function getDependences()
+    {
+        $ReturnNode = array();
+        foreach($this->Node as $key=>$value)
+        {
+            if(preg_match('/_ref|_ref.[0-9]|ref/', $key))
+            {
+                $ReturnNode[] = $value;
+            }
+        }
+        return $ReturnNode;
+    }
 }
