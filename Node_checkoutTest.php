@@ -34,8 +34,8 @@ class Node_checkoutTest extends PHPUnit_Framework_TestCase
     public function testArrayReturnValueLvlFirst()
     {
         $array = array(
-            "1" => array("uuid" => "1", "ref1" => "2"),
-            "2" => array("uuid" => "2"));
+            "1" => array("id"=>"1", "uuid" => "uuid1", "ref1" => "2"),
+            "2" => array("id"=>"2", "uuid" => "uuid2"));
 
         $graph = new Graph($array);
         $SetNodeData = $graph->getAllNodes();
@@ -49,8 +49,8 @@ class Node_checkoutTest extends PHPUnit_Framework_TestCase
     public function testSubgraph()
     {
         $array = array(
-            "1" => array("uuid" => "1", "ref1" => "2"),
-            "2" => array("uuid" => "2"));
+            "1" => array("id"=>"1", "uuid" => "uuid1", "ref1" => "2"),
+            "2" => array("id"=>"2", "uuid" => "uuid2"));
 
         $graph = new Graph($array);
 
@@ -67,8 +67,8 @@ class Node_checkoutTest extends PHPUnit_Framework_TestCase
     public function testGetNode()
     {
         $array = array(
-            "1" => array("uuid" => "1", "ref1" => "2"),
-            "2" => array("uuid" => "2"));
+            "1" => array("id"=>"1", "uuid" => "uuid1", "ref1" => "2"),
+            "2" => array("id"=>"2", "uuid" => "uuid2"));
 
         $graph = new Graph($array);
 
@@ -80,9 +80,9 @@ class Node_checkoutTest extends PHPUnit_Framework_TestCase
     public function testSubgraphExtended()
     {
         $array = array(
-            "1" => array("uuid" => "1", "ref1" => "2"),
-            "2" => array("uuid" => "2", "ref1" => "3"),
-            "3" => array("uuid" => "3"));
+            "1" => array("id"=>"1", "uuid" => "uuid1", "ref1" => "2"),
+            "2" => array("id"=>"2", "uuid" => "uuid2", "ref1" => "3"),
+            "3" => array("id"=>"3", "uuid" => "uuid3"));
 
         $graph = new Graph($array);
         $subgraph = $graph->getSubgraph('1');
@@ -99,9 +99,9 @@ class Node_checkoutTest extends PHPUnit_Framework_TestCase
     public function testSubgraphCyclic()
     {
         $array = array(
-            "1" => array("uuid" => "1", "ref1" => "2"),
-            "2" => array("uuid" => "2", "ref1" => "3"),
-            "3" => array("uuid" => "3", "ref1" => "2"));
+            "1" => array("id"=>"1", "uuid" => "uuid1", "ref1" => "2"),
+            "2" => array("id"=>"2", "uuid" => "uuid2", "ref1" => "3"),
+            "3" => array("id"=>"3", "uuid" => "uuid3", "ref1" => "2"));
 
         $graph = new Graph($array);
         $subgraph = $graph->getSubgraph('1');
@@ -118,12 +118,12 @@ class Node_checkoutTest extends PHPUnit_Framework_TestCase
     public function testFinalGraph()
     {
         $array = array(
-            "1" => array("uuid" => "1", "ref1" => "2"),
-            "2" => array("uuid" => "2", "ref1" => "3", "ref2" => "4"),
-            "3" => array("uuid" => "3", "ref1" => "2", "ref2" => "1"),
-            "4" => array("uuid" => "4", "ref1" => "5", "ref2" => "1"),
-            "5" => array("uuid" => "5", "ref1" => "2"),
-            "6" => array("uuid" => "6", "ref1" => "4"));
+            "1" => array("id"=>"1", "uuid" => "uuid1", "ref1" => "2"),
+            "2" => array("id"=>"2", "uuid" => "uuid2", "ref1" => "3", "ref2" => "4"),
+            "3" => array("id"=>"3", "uuid" => "uuid3", "ref1" => "2", "ref2" => "1"),
+            "4" => array("id"=>"4", "uuid" => "uuid4", "ref1" => "5", "ref2" => "1"),
+            "5" => array("id"=>"5", "uuid" => "uuid5", "ref1" => "2"),
+            "6" => array("id"=>"6", "uuid" => "uuid6", "ref1" => "4"));
 
         $graph = new Graph($array);
         $subgraph = $graph->getSubgraph('1');

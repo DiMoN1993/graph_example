@@ -32,8 +32,8 @@ class Graph
                 if(!isset($AllNodes[$node_id]))
                 {
                     $GraphNode = $this->getNode($node_id);
-                    $AllNodes[$GraphNode['uuid']] = $GraphNode;
-                    $SwitchedNodes[$GraphNode['uuid']] = $GraphNode;
+                    $AllNodes[$GraphNode['id']] = $GraphNode;
+                    $SwitchedNodes[$GraphNode['id']] = $GraphNode;
                 }
             }
         }
