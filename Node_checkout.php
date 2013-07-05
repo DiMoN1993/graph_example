@@ -22,7 +22,6 @@ class Graph
         $SwitchedNodes = array();
         $AllNodes[$KeyOfNode] = $this->GraphDescription[$KeyOfNode];
         $SwitchedNodes[$KeyOfNode] = $this->GraphDescription[$KeyOfNode];
-        $i;
         while (count($SwitchedNodes) != 0)
         {
             $PopOutArray = array_pop($SwitchedNodes);
